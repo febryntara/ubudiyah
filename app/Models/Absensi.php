@@ -10,6 +10,7 @@ class Absensi extends Model
     use HasFactory;
 
     protected $guarded = ['id'];
+    protected $table = "tb_absensi";
 
     public static function absensi_counter($validated_request, $error_counter_return = 0, $do = 'create', ?Absensi $absensi = null)
     {

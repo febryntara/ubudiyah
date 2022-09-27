@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RegisterController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -51,8 +52,15 @@ Route::get('/admin', function () {
     return view('admin/home');
 });
 
-Route::get('/admin/acara', function () {
-    return view('admin/acara');
+
+Route::controller(SchoolEventController::class)->group(function () {
+    Route::get('/admin/acara', 'index')->name('acara.all');
+    Route::get('/admin/acara/tambah', 'create')->name('acara.create');
+    Route::post('/admin/acara/tambah', 'store')->name('acara.store');
+    Route::get('/admin/acara/{acara}', 'detail')->name('acara.detail');
+    Route::get('/admin/acara/{acara}/ubah', 'update')->name('acara.update');
+    Route::patch('/admin/acara/{acara}/ubah', 'patch')->name('acara.patch');
+    Route::delete('/admin/acara/{acara}/delete', 'delete')->name('acara.delete');
 });
 
 Route::get('/admin/user', function () {
@@ -77,10 +85,6 @@ Route::get('/admin/hapus_guru', function () {
 
 Route::get('/admin/header', function () {
     return view('admin/header');
-});
-
-Route::get('/admin/acara', function () {
-    return view('admin/acara');
 });
 
 Route::get('/admin/home', function () {
@@ -113,4 +117,4 @@ Route::get('/admin/ubah_guru', function () {
 
 
 // Route::put('/admin/register', [RegisterController::class, 'store']);
-Route::resource('logn',RegisterController::class);
+Route::resource('logn', RegisterController::class);
