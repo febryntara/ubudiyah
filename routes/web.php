@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RegisterController;
+use Illuminate\Support\Facades\Hash;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,7 +37,7 @@ Route::get('/guru', function () {
 
 Route::get('/login', function () {
     return view('login');
-});
+})->name('login');
 
 Route::get('/siswa', function () {
     return view('siswa');
@@ -50,27 +51,28 @@ Route::get('/ujian', function () {
 
 Route::get('/admin', function () {
     return view('admin/home');
-});
+})->middleware('auth');
 
 
 Route::controller(SchoolEventController::class)->group(function () {
-    Route::get('/admin/acara', 'index')->name('acara.all');
-    Route::get('/admin/acara/tambah', 'create')->name('acara.create');
-    Route::post('/admin/acara/tambah', 'store')->name('acara.store');
-    Route::get('/admin/acara/{acara}', 'detail')->name('acara.detail');
-    Route::get('/admin/acara/{acara}/ubah', 'update')->name('acara.update');
-    Route::patch('/admin/acara/{acara}/ubah', 'patch')->name('acara.patch');
-    Route::delete('/admin/acara/{acara}/hapus', 'delete')->name('acara.delete');
+    Route::get('/admin/acara', 'index')->name('acara.all')->middleware('auth');
+    Route::get('/admin/acara/tambah', 'create')->name('acara.create')->middleware('auth');
+    Route::post('/admin/acara/tambah', 'store')->name('acara.store')->middleware('auth');
+    Route::get('/admin/acara/{acara}', 'detail')->name('acara.detail')->middleware('auth');
+    Route::get('/admin/acara/{acara}/ubah', 'update')->name('acara.update')->middleware('auth');
+    Route::patch('/admin/acara/{acara}/ubah', 'patch')->name('acara.patch')->middleware('auth');
+    Route::delete('/admin/acara/{acara}/hapus', 'delete')->name('acara.delete')->middleware('auth');
 });
 
 Route::controller(UserController::class)->group(function () {
-    Route::get('/admin/user', 'allUser')->name('user.all');
-    Route::get('/admin/user/tambah', 'registerUser')->name('user.create');
-    Route::post('/admin/user/tambah', 'store')->name('user.store');
-    Route::get('/admin/user/{user}/detail', 'detail')->name('user.detail');
-    Route::get('/admin/user/{user}/ubah', 'editUser')->name('user.update');
-    Route::patch('/admin/user/{user}/ubah', 'patch')->name('user.patch');
-    Route::delete('/admin/user/{user}/hapus', 'delete')->name('user.delete');
+    Route::post('/login', 'loginAttempt')->name('login_attempt')->middleware('guest');
+    Route::get('/admin/user', 'allUser')->name('user.all')->middleware('auth');
+    Route::get('/admin/user/tambah', 'registerUser')->name('user.create')->middleware('auth');
+    Route::post('/admin/user/tambah', 'store')->name('user.store')->middleware('auth');
+    Route::get('/admin/user/{user}/detail', 'detail')->name('user.detail')->middleware('auth');
+    Route::get('/admin/user/{user}/ubah', 'editUser')->name('user.update')->middleware('auth');
+    Route::patch('/admin/user/{user}/ubah', 'patch')->name('user.patch')->middleware('auth');
+    Route::delete('/admin/user/{user}/hapus', 'delete')->name('user.delete')->middleware('auth');
 });
 
 Route::get('/admin/footer', function () {

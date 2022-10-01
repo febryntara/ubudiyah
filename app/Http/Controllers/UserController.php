@@ -72,9 +72,6 @@ class UserController extends Controller
 
     public function loginAttempt(Request $request)
     {
-        $data = [
-            'title' => 'Logging In',
-        ];
         $credentials = $request->validate([
             'email' => 'required|max:30|min:8',
             'password' => 'required|max:30|min:8',
