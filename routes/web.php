@@ -37,7 +37,7 @@ Route::get('/guru', function () {
 
 Route::get('/login', function () {
     return view('login');
-})->name('login');
+})->name('login')->middleware('guest');
 
 Route::get('/siswa', function () {
     return view('siswa');
@@ -51,7 +51,7 @@ Route::get('/ujian', function () {
 
 Route::get('/admin', function () {
     return view('admin/home');
-})->middleware('auth');
+})->middleware('auth')->name('dashboard');
 
 
 Route::controller(SchoolEventController::class)->group(function () {
@@ -66,6 +66,7 @@ Route::controller(SchoolEventController::class)->group(function () {
 
 Route::controller(UserController::class)->group(function () {
     Route::post('/login', 'loginAttempt')->name('login_attempt')->middleware('guest');
+    Route::get('/logout', 'logout')->name('logout')->middleware('auth');
     Route::get('/admin/user', 'allUser')->name('user.all')->middleware('auth');
     Route::get('/admin/user/tambah', 'registerUser')->name('user.create')->middleware('auth');
     Route::post('/admin/user/tambah', 'store')->name('user.store')->middleware('auth');

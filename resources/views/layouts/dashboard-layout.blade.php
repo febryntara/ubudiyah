@@ -255,7 +255,7 @@
                             <li><a href="/admin/tpq">TPQ</a></li>
                             <li><a href="/admin/madin">MADIN</a></li>
                         </ul>
-                    <li><a href="/admin/logout"><i class="fa fa-dashboard"></i> <span>Logout</span></a></li>
+                    <li><a href="{{ route('logout') }}"><i class="fa fa-dashboard"></i> <span>Logout</span></a></li>
                     </li>
                 </ul>
                 <!-- /.sidebar-menu -->

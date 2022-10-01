@@ -79,7 +79,7 @@ class UserController extends Controller
 
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-            return redirect()->intended('dashboard');
+            return redirect()->intended('admin');
         }
         return back()->with('failed', 'Login Gagal, Coba Lagi!');
     }
@@ -92,7 +92,7 @@ class UserController extends Controller
 
         $request->session()->regenerateToken();
 
-        return redirect()->route('auth.loginForm');
+        return redirect()->route('login');
     }
 
     public function update()
