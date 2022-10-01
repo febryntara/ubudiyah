@@ -10,9 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
-
-use function PHPUnit\Framework\isEmpty;
-use function PHPUnit\Framework\isNull;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
@@ -27,25 +25,31 @@ class UserController extends Controller
 
     public function store(Request $request)
     {
-        $data = [
-            'title' => 'Saving Data',
-        ];
         $validated = $request->validate([
             'email' => 'required|email:dns',
             'name' => 'required|max:35',
             'password' => 'required',
+            'password_2' => 'required|same:password',
             'role_id' => 'required|numeric',
             'umur' => 'required|numeric|max:100|min:6',
             'tanggal_lahir' => 'required|date',
             'tempat_lahir' => 'required|string',
             'jenis_kelamin' => 'required|numeric',
+            'gambar' => 'mimes:jpg,png,jpeg|max:2048'
         ]);
+
+        // return dd($validated);
         $validated['password'] = Hash::make($validated['password']);
         if ($validated['role_id'] == 3) {
             $validated['status_akun'] = 'aktif';
         }
         $bool = User::create($validated);
         if ($bool) {
+            if ($request->hasFile('gambar')) {
+                $bool->image()->create([
+                    'src' => $request->file('gambar')->store('dynamic_images')
+                ]);
+            }
             // kalo berhasil redirect ke halaman login / langsung login
             if (!auth()) {
                 if (Auth::login($bool)) {
@@ -132,6 +136,12 @@ class UserController extends Controller
         $user = is_null($user) ? auth()->user() : User::where('id', $user)->first();
         $bool = $user->update($validated);
         if ($bool) {
+            if ($request->hasFile('gambar')) {
+                Storage::delete($user->image->src);
+                $user->image()->update([
+                    'src' => $request->file('gambar')->store('dynamic_images')
+                ]);
+            }
             return back()->with('success', 'Data Berhasil Di Perbaharui');
         }
         return back()->with('error', 'Data gagal Di Perbaharui');
@@ -192,7 +202,7 @@ class UserController extends Controller
             'title' => "Daftar Pengguna",
             'users' => User::latest()->get()
         ];
-        return view('pages.manajemen-pengguna.allMP', $data);
+        return view('admin.user', $data);
     }
     public function detailUser($user = null)
     {
@@ -209,7 +219,7 @@ class UserController extends Controller
             'user' => is_null($user) ? auth()->user() : User::where('id', $user)->first(),
             'user_roles' => UserRole::all(),
         ];
-        return view('pages.manajemen-pengguna.editMP', $data);
+        return view('admin.user_ubah', $data);
     }
     public function deleteUser(User $user)
     {
@@ -226,6 +236,6 @@ class UserController extends Controller
             'user_roles' => UserRole::all()
         ];
 
-        return view('pages.manajemen-pengguna.registerMP', $data);
+        return view('admin.user_tambah', $data);
     }
 }

@@ -60,11 +60,17 @@ Route::controller(SchoolEventController::class)->group(function () {
     Route::get('/admin/acara/{acara}', 'detail')->name('acara.detail');
     Route::get('/admin/acara/{acara}/ubah', 'update')->name('acara.update');
     Route::patch('/admin/acara/{acara}/ubah', 'patch')->name('acara.patch');
-    Route::delete('/admin/acara/{acara}/delete', 'delete')->name('acara.delete');
+    Route::delete('/admin/acara/{acara}/hapus', 'delete')->name('acara.delete');
 });
 
-Route::get('/admin/user', function () {
-    return view('admin/user');
+Route::controller(UserController::class)->group(function () {
+    Route::get('/admin/user', 'allUser')->name('user.all');
+    Route::get('/admin/user/tambah', 'registerUser')->name('user.create');
+    Route::post('/admin/user/tambah', 'store')->name('user.store');
+    Route::get('/admin/user/{user}/detail', 'detail')->name('user.detail');
+    Route::get('/admin/user/{user}/ubah', 'editUser')->name('user.update');
+    Route::patch('/admin/user/{user}/ubah', 'patch')->name('user.patch');
+    Route::delete('/admin/user/{user}/hapus', 'delete')->name('user.delete');
 });
 
 Route::get('/admin/footer', function () {

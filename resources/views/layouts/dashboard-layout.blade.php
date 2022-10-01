@@ -14,6 +14,19 @@
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
     @yield('head')
+    <style>
+        .text-primary {
+            color: #337ab7;
+        }
+
+        .text-danger {
+            color: #d9534f;
+        }
+
+        .text-warning {
+            color: #f0ad4e;
+        }
+    </style>
 </head>
 
 <body class="hold-transition skin-blue sidebar-mini">
@@ -346,7 +359,8 @@
         <div class="control-sidebar-bg"></div>
     </div>
 
-    <script src="assets/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"
+        integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
     <script src="assets/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="assets/dist/js/adminlte.min.js"></script>
 
