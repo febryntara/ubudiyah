@@ -169,7 +169,7 @@
         @error('gambar')
             <p class="text-danger">{{ $message }}</p>
         @enderror
-        <img width="140" id="preview_gambar" alt="gambar" src="{{ asset('storage/' . $user->image->src) }}">
+        <img width="140" id="preview_gambar" alt="gambar" src="">
         <div class="form-group">
             <input name="gambar" type="file" id="gambar" onchange="previewImage()">
             <p class="help-block">Masukan Gambar Acara Disini.</p>

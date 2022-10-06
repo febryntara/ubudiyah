@@ -70,10 +70,11 @@ Route::controller(UserController::class)->group(function () {
     Route::get('/admin/user', 'allUser')->name('user.all')->middleware('auth');
     Route::get('/admin/user/tambah', 'registerUser')->name('user.create')->middleware('auth');
     Route::post('/admin/user/tambah', 'store')->name('user.store')->middleware('auth');
-    Route::get('/admin/user/{user}/detail', 'detail')->name('user.detail')->middleware('auth');
+    Route::get('/admin/user/{user}/detail', 'detailUser')->name('user.detail')->middleware('auth');
     Route::get('/admin/user/{user}/ubah', 'editUser')->name('user.update')->middleware('auth');
     Route::patch('/admin/user/{user}/ubah', 'patch')->name('user.patch')->middleware('auth');
     Route::delete('/admin/user/{user}/hapus', 'delete')->name('user.delete')->middleware('auth');
+    Route::get('/admin/guru', 'guru')->name('guru')->middleware('auth');
 });
 
 Route::get('/admin/footer', function () {
@@ -82,10 +83,6 @@ Route::get('/admin/footer', function () {
 
 Route::get('/admin/gallery', function () {
     return view('admin/gallery');
-});
-
-Route::get('/admin/guru', function () {
-    return view('admin/guru');
 });
 
 Route::get('/admin/hapus_guru', function () {

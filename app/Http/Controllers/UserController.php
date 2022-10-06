@@ -134,10 +134,16 @@ class UserController extends Controller
         $bool = $user->update($validated);
         if ($bool) {
             if ($request->hasFile('gambar')) {
-                Storage::delete($user->image->src);
-                $user->image()->update([
-                    'src' => $request->file('gambar')->store('dynamic_images')
-                ]);
+                if ($user->image()->count()) {
+                    Storage::delete($user->image->src);
+                    $user->image()->update([
+                        'src' => $request->file('gambar')->store('dynamic_images')
+                    ]);
+                } else {
+                    $user->image()->create([
+                        'src' => $request->file('gambar')->store('dynamic_images')
+                    ]);
+                }
             }
             return back()->with('success', 'Data Berhasil Di Perbaharui');
         }
@@ -146,12 +152,9 @@ class UserController extends Controller
 
     public function delete(User $user)
     {
-        $data = [
-            'title' => 'Deleting User',
-        ];
         $bool = $user->delete();
         if ($bool) {
-            return back()->with('success', 'Data Berhasil Di Hapus');
+            return redirect()->route('user.all')->with('success', 'Data Berhasil Di Hapus');
         }
         return back()->with('error', 'Data gagal Di Hapus');
     }
@@ -207,7 +210,7 @@ class UserController extends Controller
             'title' => "Detail Pengguna",
             'user' => is_null($user) ? auth()->user() : User::where('id', $user)->first()
         ];
-        return view('pages.manajemen-pengguna.detailMP', $data);
+        return view('admin.user_detail', $data);
     }
     public function editUser($user = null)
     {
@@ -234,5 +237,15 @@ class UserController extends Controller
         ];
 
         return view('admin.user_tambah', $data);
+    }
+
+    public function guru()
+    {
+        $data = [
+            'guru' => User::where('role_id', 2)->latest()->get(),
+            'title' => 'Data Guru'
+        ];
+
+        return view('admin.guru', $data);
     }
 }

@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\User;
+use App\Models\UserRole;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
@@ -20,7 +21,26 @@ class DatabaseSeeder extends Seeder
             'email' => 'admin@gmail.com',
             'password' => Hash::make('password'),
             'name' => 'admin',
-            'role_id' => 1 //siswa, otorisasi lom dibaut, sementara pake role siswa buat akses semua
+            'role_id' => 3 //siswa, otorisasi lom dibaut, sementara pake role siswa buat akses semua
         ]);
+
+        UserRole::create([
+            'name' => 'siswa'
+        ]);
+        UserRole::create([
+            'name' => 'guru'
+        ]);
+        UserRole::create([
+            'name' => 'umum'
+        ]);
+
+        for ($i = 1; $i < 10; $i++) {
+            User::create([
+                'email' => 'email' . mt_rand($i + $i, $i * $i + 1) . '@gmail.com',
+                'password' => Hash::make('password'),
+                'name' => 'admin' . $i,
+                'role_id' => 2 //siswa, otorisasi lom dibaut, sementara pake role siswa buat akses semua
+            ]);
+        }
     }
 }
