@@ -22,15 +22,15 @@ class CreateUsersTable extends Migration
             $table->integer('role_id'); //umum
             $table->string('status_akun')->default('tidak_aktif'); //umum
             $table->rememberToken();
-            $table->integer('umur'); //umum
-            $table->date('tanggal_lahir'); //umum
-            $table->string('tempat_lahir'); //umum
+            $table->integer('umur')->default(0); //umum
+            $table->date('tanggal_lahir')->nullable(); //umum
+            $table->string('tempat_lahir')->nullable(); //umum
             $table->string('nip')->nullable(); //guru
             $table->string('nik')->nullable(); //umum
             $table->string('nis')->nullable(); //siswa
             $table->string('nisn')->nullable(); //siswa
             $table->string('cita_cita')->nullable(); //siswa
-            $table->integer('jenis_kelamin'); //umum
+            $table->integer('jenis_kelamin')->default(0); //umum
             $table->integer('kelas')->nullable(); //siswa
             $table->string('agama')->nullable(); //umum
             $table->integer('status_kawin')->default(0); //umum
