@@ -21,7 +21,7 @@ class DatabaseSeeder extends Seeder
             'email' => 'admin@gmail.com',
             'password' => Hash::make('password'),
             'name' => 'admin',
-            'role_id' => 3 //siswa, otorisasi lom dibaut, sementara pake role siswa buat akses semua
+            'role_id' => 4
         ]);
 
         UserRole::create([
@@ -39,7 +39,7 @@ class DatabaseSeeder extends Seeder
                 'email' => 'email' . mt_rand($i + $i, $i * $i + 1) . '@gmail.com',
                 'password' => Hash::make('password'),
                 'name' => 'admin' . $i,
-                'role_id' => 2 //siswa, otorisasi lom dibaut, sementara pake role siswa buat akses semua
+                'role_id' => 2 //guru, otorisasi lom dibaut, sementara pake role siswa buat akses semua
             ]);
         }
     }

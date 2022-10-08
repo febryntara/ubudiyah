@@ -4,7 +4,8 @@
         <div class="panel panel-default">
             <div class="panel-heading text-left">Gambar</div>
             <div class="panel-body">
-                <img src="" alt="">
+                <img style="display: block; width: 100%"
+                    src="{{ isset($user->image->src) ? asset('storage/' . $user->image->src) : null }}" alt="">
             </div>
         </div>
         <div class="btn-group" role="group" aria-label="...">
@@ -66,6 +67,48 @@
                 {{ $user->alamat ?? 'Belum Diatur' }}
             </div>
         </div>
+
+        @if ($user->role_id === 1)
+            <div class="panel panel-default">
+                <div class="panel-heading">NIS</div>
+                <div class="panel-body">
+                    {{ $user->nis ?? 'Belum Diatur' }}
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">NISN</div>
+                <div class="panel-body">
+                    {{ $user->nisn ?? 'Belum Diatur' }}
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">Cita cita</div>
+                <div class="panel-body">
+                    {{ $user->cita_cita ?? 'Belum Diatur' }}
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">Kelas</div>
+                <div class="panel-body">
+                    {{ $user->kelas ?? 'Belum Diatur' }}
+                </div>
+            </div>
+        @endif
+        @if ($user->role_id === 2)
+            <div class="panel panel-default">
+                <div class="panel-heading">NIP</div>
+                <div class="panel-body">
+                    {{ $user->nip ?? 'Belum Diatur' }}
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">Moto Hidup</div>
+                <div class="panel-body">
+                    {{ $user->moto_hidup ?? 'Belum Diatur' }}
+                </div>
+            </div>
+        @endif
+
     </div>
 @endsection
 

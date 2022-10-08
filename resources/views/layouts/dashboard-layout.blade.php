@@ -7,10 +7,10 @@
     <title>MDA Ubudiyah</title>
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <link rel="stylesheet" href="{{ url('') }}/assets/bower_components/bootstrap/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/assets/bower_components/font-awesome-4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="/assets/bower_components/Ionicons/css/ionicons.min.css">
-    <link rel="stylesheet" href="/assets/dist/css/AdminLTE.min.css">
-    <link rel="stylesheet" href="/assets/dist/css/skins/skin-blue.min.css">
+    <link rel="stylesheet" href="{{ asset('/assets/bower_components/font-awesome-4.7.0/css/font-awesome.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('/assets/bower_components/Ionicons/css/ionicons.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('/assets/dist/css/AdminLTE.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('/assets/dist/css/skins/skin-blue.min.css') }}">
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
     @yield('head')
@@ -240,22 +240,46 @@
                     <li class="header">Menu Navigation</li>
                     <!-- Optionally, you can add icons to the links -->
                     <li><a href="/admin"><i class="fa fa-dashboard"></i> <span>Home</span></a></li>
-                    <li><a href="/admin/user"><i class="fa fa-dashboard"></i> <span>User</span></a></li>
-                    <li><a href="/admin/guru"><i class="fa fa-dashboard"></i> <span>Data Guru</span></a></li>
+                    @can('admin')
+                        <li><a href="/admin/user"><i class="fa fa-dashboard"></i> <span>User</span></a></li>
+                        <li><a href="/admin/guru"><i class="fa fa-dashboard"></i> <span>Data Guru</span></a></li>
+                    @endcan
+                    @can('guru')
+                        <li><a href="/admin/guru"><i class="fa fa-dashboard"></i> <span>Data Guru</span></a></li>
+                    @endcan
                     <li><a href="/admin/gallery"><i class="fa fa-dashboard"></i> <span>Gallery</span></a></li>
                     <li><a href="/admin/acara"><i class="fa fa-dashboard"></i> <span>Acara</span></a></li>
 
-                    <li class="treeview">
-                        <a href="#"><i class="fa fa-dashboard"></i> <span>Kelas</span>
-                            <span class="pull-right-container">
-                                <i class="fa fa-angle-left pull-right"></i>
-                            </span>
-                        </a>
-                        <ul class="treeview-menu">
-                            <li><a href="/admin/tpq">TPQ</a></li>
-                            <li><a href="/admin/madin">MADIN</a></li>
-                        </ul>
-                    <li><a href="{{ route('logout') }}"><i class="fa fa-dashboard"></i> <span>Logout</span></a></li>
+                    @can('admin')
+                        <li class="treeview">
+                            <a href="javascript::"><i class="fa fa-dashboard"></i> <span>Kelas</span>
+                                <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li><a href="/admin/siswa">Siswa</a></li>
+                                <li><a href="/admin/absensi">Absensi</a></li>
+                                {{-- TPQ & MADIN --}}
+                            </ul>
+                        </li>
+                    @endcan
+                    @can('guru')
+                        <li class="treeview">
+                            <a href="javascript::"><i class="fa fa-dashboard"></i> <span>Kelas</span>
+                                <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li><a href="/admin/siswa">Siswa</a></li>
+                                <li><a href="/admin/absensi">Absensi</a></li>
+                                {{-- TPQ & MADIN --}}
+                            </ul>
+                        </li>
+                    @endcan
+                    <li>
+                        <a href="{{ route('logout') }}"><i class="fa fa-dashboard"></i> <span>Logout</span></a>
                     </li>
                 </ul>
                 <!-- /.sidebar-menu -->
@@ -361,8 +385,8 @@
 
     <script src="https://code.jquery.com/jquery-3.6.1.min.js"
         integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
-    <script src="assets/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-    <script src="assets/dist/js/adminlte.min.js"></script>
+    <script src="{{ asset('assets/bower_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('assets/dist/js/adminlte.min.js') }}"></script>
 
     @yield('script')
 </body>

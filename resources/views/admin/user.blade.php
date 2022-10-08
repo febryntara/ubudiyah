@@ -21,11 +21,13 @@
                     </td>
                     <td class="">
                         <a href="{{ route('user.detail', ['user' => $item]) }}" class="btn btn-primary">Lihat</a>
-                        <a href="{{ route('user.update', ['user' => $item]) }}" class="btn btn-warning">Ubah</a>
-                        <form action="{{ route('user.delete', ['user' => $item]) }}" style="display: inline" method="post">
-                            @csrf @method('delete')
-                            <button type="submit" class="btn btn-danger">Hapus</button>
-                        </form>
+                        @can('admin')
+                            <a href="{{ route('user.update', ['user' => $item]) }}" class="btn btn-warning">Ubah</a>
+                            <form action="{{ route('user.delete', ['user' => $item]) }}" style="display: inline" method="post">
+                                @csrf @method('delete')
+                                <button type="submit" class="btn btn-danger">Hapus</button>
+                            </form>
+                        @endcan
                     </td>
                 </tr>
             @endforeach

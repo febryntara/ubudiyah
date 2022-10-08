@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Absensi;
 use App\Models\DetailAbsensi;
 use App\Models\SchoolEvent;
 use App\Models\User;
@@ -247,5 +248,26 @@ class UserController extends Controller
         ];
 
         return view('admin.guru', $data);
+    }
+
+    public function allSiswa()
+    {
+        $data = [
+            'siswa' => User::where('role_id', 1)->latest()->get(),
+            'title' => 'Data Siswa'
+        ];
+
+
+        return view('admin.siswa', $data);
+    }
+
+    public function allAbsensi()
+    {
+        $data = [
+            'absen' => Absensi::latest()->get(),
+            'title' => 'Absensi Siswa'
+        ];
+
+        return view('admin.absensi', $data);
     }
 }

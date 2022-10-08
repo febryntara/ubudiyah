@@ -1,7 +1,12 @@
 @extends('layouts.dashboard-layout')
 @section('body')
     <h2 class="text-center">Acara</h2>
-    <a href="{{ route('acara.create') }}" class="btn btn-primary"> [+] Tambahkan</a>
+    @can('admin')
+        <a href="{{ route('acara.create') }}" class="btn btn-primary"> [+] Tambahkan</a>
+    @endcan
+    @can('guru')
+        <a href="{{ route('acara.create') }}" class="btn btn-primary"> [+] Tambahkan</a>
+    @endcan
     <table class="table table-bordered text-center">
         <thead>
             <tr>
@@ -25,12 +30,22 @@
                     </td>
                     <td class="">
                         <a href="{{ route('acara.detail', ['acara' => $item]) }}" class="btn btn-primary">Lihat</a>
-                        <a href="{{ route('acara.update', ['acara' => $item]) }}" class="btn btn-warning">Ubah</a>
-                        <form action="{{ route('acara.delete', ['acara' => $item]) }}" style="display: inline"
-                            method="post">
-                            @csrf @method('delete')
-                            <button class="btn btn-danger">Hapus</button>
-                        </form>
+                        @can('admin')
+                            <a href="{{ route('acara.update', ['acara' => $item]) }}" class="btn btn-warning">Ubah</a>
+                            <form action="{{ route('acara.delete', ['acara' => $item]) }}" style="display: inline"
+                                method="post">
+                                @csrf @method('delete')
+                                <button class="btn btn-danger">Hapus</button>
+                            </form>
+                        @endcan
+                        @can('guru')
+                            <a href="{{ route('acara.update', ['acara' => $item]) }}" class="btn btn-warning">Ubah</a>
+                            <form action="{{ route('acara.delete', ['acara' => $item]) }}" style="display: inline"
+                                method="post">
+                                @csrf @method('delete')
+                                <button class="btn btn-danger">Hapus</button>
+                            </form>
+                        @endcan
                     </td>
                 </tr>
             @endforeach

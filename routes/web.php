@@ -39,10 +39,6 @@ Route::get('/login', function () {
     return view('login');
 })->name('login')->middleware('guest');
 
-Route::get('/siswa', function () {
-    return view('siswa');
-});
-
 Route::get('/ujian', function () {
     return view('ujian');
 });
@@ -75,6 +71,8 @@ Route::controller(UserController::class)->group(function () {
     Route::patch('/admin/user/{user}/ubah', 'patch')->name('user.patch')->middleware('auth');
     Route::delete('/admin/user/{user}/hapus', 'delete')->name('user.delete')->middleware('auth');
     Route::get('/admin/guru', 'guru')->name('guru')->middleware('auth');
+    Route::get('/admin/siswa', 'allSiswa')->name('siswa.all')->middleware('auth');
+    Route::get('/admin/absensi', 'allAbsensi')->name('absensi.all')->middleware('auth');
 });
 
 Route::get('/admin/footer', function () {

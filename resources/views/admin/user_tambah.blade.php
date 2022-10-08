@@ -89,20 +89,22 @@
             </span>
             <label for="radio_role_id_1" class="form-control">Siswa</label>
         </div>
-        <div class="input-group" style="margin-top: 3px">
-            <span class="input-group-addon">
-                <input type="radio" id="radio_role_id_2" name="role_id" value="2"
-                    {{ old('role_id') == 2 ? 'checked' : null }}>
-            </span>
-            <label for="radio_role_id_2" class="form-control">Guru</label>
-        </div>
-        <div class="input-group" style="margin-top: 3px">
-            <span class="input-group-addon">
-                <input type="radio" id="radio_role_id_3" name="role_id" value="3"
-                    {{ old('role_id') == 3 ? 'checked' : null }}>
-            </span>
-            <label for="radio_role_id_3" class="form-control">Umum</label>
-        </div>
+        @can('admin')
+            <div class="input-group" style="margin-top: 3px">
+                <span class="input-group-addon">
+                    <input type="radio" id="radio_role_id_2" name="role_id" value="2"
+                        {{ old('role_id') == 2 ? 'checked' : null }}>
+                </span>
+                <label for="radio_role_id_2" class="form-control">Guru</label>
+            </div>
+            <div class="input-group" style="margin-top: 3px">
+                <span class="input-group-addon">
+                    <input type="radio" id="radio_role_id_3" name="role_id" value="3"
+                        {{ old('role_id') == 3 ? 'checked' : null }}>
+                </span>
+                <label for="radio_role_id_3" class="form-control">Umum</label>
+            </div>
+        @endcan
         <h2>Gambar</h2>
         @error('gambar')
             <p class="text-danger">{{ $message }}</p>
