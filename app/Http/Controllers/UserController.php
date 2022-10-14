@@ -260,14 +260,4 @@ class UserController extends Controller
 
         return view('admin.siswa', $data);
     }
-
-    public function allAbsensi()
-    {
-        $data = [
-            'absen' => Absensi::latest()->get(),
-            'title' => 'Absensi Siswa'
-        ];
-
-        return view('admin.absensi', $data);
-    }
 }

@@ -25,7 +25,7 @@
                             <a href="{{ route('user.update', ['user' => $item]) }}" class="btn btn-warning">Ubah</a>
                             <form action="{{ route('user.delete', ['user' => $item]) }}" style="display: inline" method="post">
                                 @csrf @method('delete')
-                                <button type="submit" class="btn btn-danger">Hapus</button>
+                                <button type="submit" class="btn bg-red-500 btn-danger">Hapus</button>
                             </form>
                         @endcan
                     </td>

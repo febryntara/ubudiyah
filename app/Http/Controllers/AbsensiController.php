@@ -15,7 +15,7 @@ class AbsensiController extends Controller
             'title' => 'Absensi',
             'absen' => Absensi::latest()->get()
         ];
-        return view('pages.absensi.all-absensi', $data);
+        return view('admin.absensi', $data);
     }
 
     public function validasiSebelumAbsen(Request $request)
@@ -28,7 +28,7 @@ class AbsensiController extends Controller
             return back()->with('error', 'Tanggal atau Kelas Kosong, Coba Ulang!');
         }
         if (!Absensi::where('tanggal', $validated['tanggal'])->where('kelas', $validated['kelas'])->exists()) {
-            return redirect()->route('auth.absensi.create', ['kelas' => $validated['kelas'], 'tanggal' => $validated['tanggal']]);
+            return redirect()->route('absensi.create', ['kelas' => $validated['kelas'], 'tanggal' => $validated['tanggal']]);
         }
         return back()->with('error', 'Absen Sudah Dilakukan, Pastikan Kelas dan Tanggal Sudah Benar!');
     }
@@ -42,7 +42,7 @@ class AbsensiController extends Controller
             'tanggal' => $request->tanggal,
             'siswa' => User::where('role_id', 1)->where('kelas', $request->kelas)->latest()->get()
         ];
-        return view('pages.absensi.create-absensi', $data);
+        return view('admin.create-absensi', $data);
     }
 
     public function store(Request $request)
@@ -56,13 +56,13 @@ class AbsensiController extends Controller
             'siswa.*.absen' => 'required|numeric'
         ]);
         if (Absensi::where('tanggal', $validated['tanggal'])->where('kelas', $validated['kelas'])->exists()) {
-            return redirect()->route('auth.absensi.all')->with('error', 'Absen Tanggal ' . $validated['tanggal'] . ' Sudah Dibuat! Pilih Tanggal Lain!');
+            return redirect()->route('absensi.all')->with('error', 'Absen Tanggal ' . $validated['tanggal'] . ' Sudah Dibuat! Pilih Tanggal Lain!');
         }
         $error_counter = Absensi::absensi_counter($validated, 0, 'create');
         if ($error_counter == 0) {
-            return redirect()->route('auth.absensi.all')->with('success', 'Absensi Berhasil Dibuat!');
+            return redirect()->route('absensi.all')->with('success', 'Absensi Berhasil Dibuat!');
         } else {
-            return redirect()->route('auth.absensi.all')->with('success', 'Absensi Berhasil Dibuat Dengan ' . $error_counter . ' Jumlah Data Error!');
+            return redirect()->route('absensi.all')->with('success', 'Absensi Berhasil Dibuat Dengan ' . $error_counter . ' Jumlah Data Error!');
         }
         return back()->with('error', 'Absensi Gagal Dibuat!');
     }
@@ -75,7 +75,7 @@ class AbsensiController extends Controller
             'siswa' => User::where('role_id', 1)->where('kelas', $absen->kelas)->latest()->get(),
             'detail_absen' => DetailAbsensi::where('absensi_id', $absen->id)->get()
         ];
-        return view('pages.absensi.edit-absensi', $data);
+        return view('admin.update-absensi', $data);
     }
 
     public function patch(Request $request, Absensi $absen)
@@ -90,9 +90,9 @@ class AbsensiController extends Controller
 
         $error_counter = Absensi::absensi_counter($validated, 0, 'update', $absen);
         if ($error_counter == 0) {
-            return redirect()->route('auth.absensi.all')->with('success', 'Absensi Berhasil Diubah!');
+            return redirect()->route('absensi.all')->with('success', 'Absensi Berhasil Diubah!');
         } else {
-            return redirect()->route('auth.absensi.all')->with('success', 'Absensi Berhasil Diubah Dengan ' . $error_counter . ' Jumlah Data Error!');
+            return redirect()->route('absensi.all')->with('success', 'Absensi Berhasil Diubah Dengan ' . $error_counter . ' Jumlah Data Error!');
         }
         return back()->with('error', 'Absensi Gagal Diubah!');
     }
@@ -100,7 +100,7 @@ class AbsensiController extends Controller
     {
         $bool = $absen->delete();
         if ($bool) {
-            return redirect()->route('auth.absensi.all')->with('success', 'Absensi Berhasil Dihapus!');
+            return redirect()->route('absensi.all')->with('success', 'Absensi Berhasil Dihapus!');
         }
         return back()->with('error', 'Absensi Gagal Dihapus!');
     }

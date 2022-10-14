@@ -2,7 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RegisterController;
-use Illuminate\Support\Facades\Hash;
 
 /*
 |--------------------------------------------------------------------------
@@ -46,7 +45,7 @@ Route::get('/ujian', function () {
 // halaman admin
 
 Route::get('/admin', function () {
-    return view('admin/home');
+    return view('admin.home');
 })->middleware('auth')->name('dashboard');
 
 
@@ -72,7 +71,16 @@ Route::controller(UserController::class)->group(function () {
     Route::delete('/admin/user/{user}/hapus', 'delete')->name('user.delete')->middleware('auth');
     Route::get('/admin/guru', 'guru')->name('guru')->middleware('auth');
     Route::get('/admin/siswa', 'allSiswa')->name('siswa.all')->middleware('auth');
-    Route::get('/admin/absensi', 'allAbsensi')->name('absensi.all')->middleware('auth');
+});
+
+Route::controller(AbsensiController::class)->group(function () {
+    Route::get('/admin/absensi', 'index')->name('absensi.all')->middleware('auth');
+    Route::get('/admin/absensi/validasi', 'validasiSebelumAbsen')->name('absensi.validasi')->middleware('auth');
+    Route::get('/admin/absensi/tambah', 'create')->name('absensi.create')->middleware('auth');
+    Route::get('/admin/absensi/edit/{absen}', 'edit')->name('absensi.edit')->middleware('auth');
+    Route::patch('/admin/absensi/patch/{absen}', 'patch')->name('absensi.patch')->middleware('auth');
+    Route::delete('/admin/absensi/delete/{absen}', 'delete')->name('absensi.delete')->middleware('auth');
+    Route::post('/admin/absensi/simpan', 'store')->name('absensi.store')->middleware('auth');
 });
 
 Route::get('/admin/footer', function () {

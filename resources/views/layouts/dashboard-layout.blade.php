@@ -27,6 +27,18 @@
             color: #f0ad4e;
         }
     </style>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        clifford: '#da373d',
+                    }
+                }
+            }
+        }
+    </script>
 </head>
 
 <body class="hold-transition skin-blue sidebar-mini">
